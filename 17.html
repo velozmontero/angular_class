@@ -1,0 +1,39 @@
+<!-- Removing names from a list using ng-click. -->
+<!-- See also http://docs.angularjs.org/api/ng/directive/ngController -->
+<!-- https://docs.angularjs.org/guide/expression -->
+<html ng-app="nameApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Angular.js Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script>
+      var nameApp = angular.module('nameApp', []);
+      nameApp.controller('NameCtrl', function ($scope){
+        $scope.names = ['Victor', 'Aaron', 'Randy'];
+
+        $scope.addName = function() {
+          $scope.names.push($scope.enteredName);
+          $scope.enteredName = '';
+        };
+
+        $scope.removeName = function(name) {
+          var i = $scope.names.indexOf(name);
+          $scope.names.splice(i, 1);
+        };
+      });
+    </script>
+  </head>
+  <body ng-controller="NameCtrl">
+    <ul>
+      <!--  name in names, removeName(name) are a angular expressions -->
+      <li ng-repeat="name in names">{{name}}  
+        <!-- Nested scope within ng-repeat -->
+        <a href="" ng-click="removeName(name)">remove</a> 
+      </li>
+    </ul>
+    <form ng-submit="addName()">
+      <input type="text" ng-model="enteredName">
+      <input type="submit" value="add">
+    </form>
+  </body>
+</html>
